@@ -75,7 +75,7 @@ endif
 bat: directory ## Install bat
 ifeq (,$(shell which bat))
 	@sudo apt install -y $@
-	@ln -s /usr/bin/batcat ~/.local/bin/bat
+	@ln -fs /usr/bin/batcat ~/.local/bin/bat
 endif
 
 avahi-daemon:  ## Install, start and enable avahi-daemon
