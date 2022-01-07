@@ -14,6 +14,5 @@ tar xf ${SRCARCHIVE}
 cd ${DIRECTORY}
 ./configure --prefix=${HOME}/.local --without-mailutils --with-x-toolkit=lucid --without-pop --with-cairo --with-json
 make -j$(nproc)
-porg -l -D make install
-
+make install
 rm -rf emacs-${VERSION}*

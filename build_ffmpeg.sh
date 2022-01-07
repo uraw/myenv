@@ -13,6 +13,5 @@ tar xf ${SRCARCHIVE}
 cd ${DIRNAME}
 ./configure --prefix=${HOME}/.local --enable-gpl --enable-libx264 --enable-nonfree
 make -j
-porg -l -D make install
-
+make install
 rm -rf ffmpeg-${VERSION}*
