@@ -66,6 +66,12 @@ ifeq (,$(shell which pip3))
 	@sudo apt install -y $@
 endif
 
+ipython3:  ## Install ipython3
+ifeq (,$(shell which ipython3))
+	@sudo apt install -y $@
+endif
+
+
 bat: directory ## Install bat
 ifeq (,$(shell which bat))
 	@sudo apt install -y $@
