@@ -127,7 +127,7 @@ pip3: python3-pip  ## Install python modules
 ################################################################################
 
 directory:  ## Create my normal dierecoties
-	@mkdir -p ~/projects ~/tmp ~/gits ~/.local
+	@mkdir -p ~/projects ~/tmp ~/gits ~/.local/bin
 
 locale:  ## Set locale
 	@sudo apt install -y locales-all
