@@ -1,14 +1,9 @@
-INSTALL_TARGETS := zsh tmux cmigemo fzf fd-find git python3 python3-pip bat emacs ffmpeg chsh rust zplug tpm pip3 docker avahi-daemon ipython3
 ACTION_TARGETS := directory locale
 ZSHPATH = $(shell which zsh)
 
 .PHONY: $(shell grep -E '^[a-zA-Z_-]+:' $(MAKEFILE_LIST) | sed 's/:.*//')
 
-all: install action
-
-install: $(INSTALL_TARGETS)
-
-action: $(ACTION_TARGETS)
+all: apt-install zsh batcat docker python apt-file avahi emacs ffmpeg rust tmux directory locale nas
 
 # https://postd.cc/auto-documented-makefile/
 .DEFAULT_GOAL := help
@@ -20,72 +15,25 @@ help:
 # Install by apt
 ################################################################################
 
-zsh: ## Install zsh
-ifeq (,$(shell which zsh))
-	@sudo apt install -y $@
+apt-install:  ## Install applications
+	@sudo apt update
+	@sudo apt install -y git fzf fd-find
+
+zsh:  ## Install zsh and set as default shell
+	@sudo apt update
+	@sudo apt install -y zsh
+	@sudo chsh -s $(ZSHPATH) ${USER}
+ifeq ($(wildcard ~/.zplug/.),)
+	@curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
 endif
 
-tmux: ## Install tmux
-ifeq (,$(shell which tmux))
-	@sudo apt install -y $@
-endif
-
-cmigemo:  ## Install cmigemo for Emacs
-ifeq (,$(shell which cmigemo))
-	@sudo apt install -y $@
-endif
-
-fzf:  ## Install fzf
-ifeq (,$(shell which fzf))
-	@sudo apt install -y $@
-endif
-
-fd-find:  ## Install fd-find
-ifeq (,$(shell which fdfind))
-	@sudo apt install -y $@
-endif
-
-git:  ## Install git
-ifeq (,$(shell which git))
-	@sudo apt install -y $@
-endif
-
-apt-file:  ## Install apt-file
-ifeq (,$(shell which apt-file))
-	@sudo apt install -y $@
-	@sudo apt-file update
-endif
-
-python3:  ## Install python3
-ifeq (,$(shell which python3))
-	@sudo apt install -y $@
-endif
-
-python3-pip:  ## Install python3-pip
-ifeq (,$(shell which pip3))
-	@sudo apt install -y $@
-endif
-
-ipython3:  ## Install ipython3
-ifeq (,$(shell which ipython3))
-	@sudo apt install -y $@
-endif
-
-bat: directory ## Install bat
-ifeq (,$(shell which bat))
-	@sudo apt install -y $@
+batcat:  ## Setup bat
+	@sudo apt update
+	@sudo apt install -y bat 
 	@ln -fs /usr/bin/batcat ~/.local/bin/bat
-endif
 
-avahi-daemon:  ## Install, start and enable avahi-daemon
-ifeq (,$(shell which avahi-daemon))
-	@sudo apt install -y $@
-	@sudo systemctl start avahi-daemon
-	@sudo systemctl enable avahi-daemon
-endif
-
-docker:
-ifeq (,$(shell which docker))
+docker:  ## Setup docker
+ifeq (,$(shell uname -r | grep WSL))
 	@sudo apt update
 	@sudo apt install -y ca-certificates curl gnupg lsb-release
 	@curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
@@ -94,24 +42,34 @@ ifeq (,$(shell which docker))
 	@sudo apt install -y docker-ce docker-ce-cli containerd.io
 endif
 
+python:  ## Setup python dev environment
+	@sudo apt update
+	@sudo apt install -y python3 python3-pip ipython3 
+	@pip3 install multidict yarl async_timeout idna_ssl aiosignal aiohttp nndownload tinydb peewee pocket-api BeautifulSoup4 toml emoji feedparser youtube-dl tqdm
 
-################################################################################
-# Other installs
-################################################################################
+apt-file:  ## Setup apt-file
+	@sudo apt update
+	@sudo apt install -y apt-file
+	@sudo apt-file update
+
+avahi:  ## Setup mDNS
+ifeq (,$(shell uname -r | grep WSL))
+	@sudo apt update
+	@sudo apt install -y avahi-daemon
+	@sudo systemctl start avahi-daemon
+	@sudo systemctl enable avahi-daemon
+endif
 
 emacs:  ## Buid and install emacs 27.1
 ifeq (,$(shell which emacs))
 	@./build_emacs.sh 27.1
 endif
+	@sudo apt update
+	@sudo apt install -y cmigemo
 
 ffmpeg:  ## Build and install ffmpeg 4.4
 ifeq (,$(shell which ffmpeg))
 	@./build_ffmpeg.sh 4.4
-endif
-
-chsh: zsh  ## Set default shell zsh
-ifneq ($(ZSHPATH), $(shell grep ${USER} /etc/passwd | tr ':' '\n' | grep zsh))
-	@chsh -s $(ZSHPATH)
 endif
 
 rust:  ## Install Rust
@@ -124,27 +82,24 @@ ifeq ($(wildcard ~/.rustup/.),)
 endif
 endif
 
-zplug: zsh git  ## Install zplug
-ifeq ($(wildcard ~/.zplug/.),)
-	@curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
-endif
-
-tpm: git  ## Install tpm (tmux plug-in manager)
+tmux:  ## Setup tmux
+	@sudo apt update
+	@sudo apt install -y tmux
 ifeq ($(wildcard ~/.tmux/plugins/tpm/.),)  # https://stackoverflow.com/questions/20763629/
 	@git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 endif
 
-pip3: python3-pip  ## Install python modules
-	@pip3 install multidict yarl async_timeout idna_ssl aiosignal aiohttp nndownload tinydb peewee \
-	pocket-api BeautifulSoup4 toml emoji feedparser youtube-dl tqdm
-
-################################################################################
-# Actions
-################################################################################
-
-directory:  ## Create my normal dierecoties
+directory:  ## Create my normal directories
 	@mkdir -p ~/projects ~/tmp ~/gits ~/.local/bin
 
 locale:  ## Set locale
+	@sudo apt update
 	@sudo apt install -y locales-all
 	@sudo update-locale LANG=en_US.UTF-8
+
+nas:  ## Setup NAS
+	@sudo apt update
+	@sudo apt install -y nfs-common
+	@sudo mkdir -p /mnt/nas
+	@sudo echo "nas:/Public	/mnt/nas	nfs" | sudo tee -a /etc/fstab > /dev/null
+	@sudo mount -a
