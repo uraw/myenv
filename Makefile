@@ -101,7 +101,7 @@ ifeq ($(wildcard ~/.tmux/plugins/tpm/.),)  # https://stackoverflow.com/questions
 endif
 
 directory:  ## Create my normal directories
-	@mkdir -p ~/projects ~/tmp ~/gits ~/.local/bin
+	@mkdir -p ~/projects ~/tmp ~/gits ~/.local/bin ~/.config/auth
 
 locale:  ## Set locale
 	@sudo apt update
