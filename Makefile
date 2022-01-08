@@ -101,5 +101,5 @@ nas:  ## Setup NAS
 	@sudo apt update
 	@sudo apt install -y nfs-common
 	@sudo mkdir -p /mnt/nas
-	@sudo echo "nas:/Public	/mnt/nas	nfs" | sudo tee -a /etc/fstab > /dev/null
+	@sudo echo "nas.local:/Public	/mnt/nas	nfs" | sudo tee -a /etc/fstab > /dev/null
 	@sudo mount -a
