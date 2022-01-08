@@ -64,7 +64,7 @@ apt-file:  ## Setup apt-file
 avahi:  ## Setup mDNS
 ifeq (,$(shell uname -r | grep WSL))
 	@sudo apt update
-	@sudo apt install -y avahi-daemon
+	@sudo apt install -y avahi-daemon avahi-utils
 	@sudo systemctl start avahi-daemon
 	@sudo systemctl enable avahi-daemon
 endif
