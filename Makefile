@@ -17,7 +17,7 @@ help:
 
 apt-install:  ## Install applications
 	@sudo apt update
-	@sudo apt install -y git fzf fd-find
+	@sudo apt install -y git fzf fd-find silversearcher-ag
 
 zsh:  ## Install zsh and set as default shell
 	@sudo apt update
