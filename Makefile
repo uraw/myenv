@@ -54,7 +54,7 @@ endif
 python:  ## Setup python dev environment
 	@sudo apt update
 	@sudo apt install -y python3 python3-pip ipython3 
-	@pip3 install multidict yarl async_timeout idna_ssl aiosignal aiohttp nndownload tinydb peewee pocket-api BeautifulSoup4 toml emoji feedparser youtube-dl tqdm
+	@pip3 install multidict yarl async_timeout idna_ssl aiosignal aiohttp nndownload==1.11 tinydb peewee pocket-api BeautifulSoup4 toml emoji feedparser youtube-dl tqdm
 
 apt-file:  ## Setup apt-file
 	@sudo apt update
