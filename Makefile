@@ -75,6 +75,8 @@ ifeq (,$(shell which emacs))
 endif
 	@sudo apt update
 	@sudo apt install -y cmigemo
+	@sudo apt install -y texinfo  # For magit
+
 
 ffmpeg:  ## Build and install ffmpeg 4.4
 ifeq (,$(shell which ffmpeg))
