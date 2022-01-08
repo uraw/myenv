@@ -1,4 +1,4 @@
-INSTALL_TARGETS := zsh tmux cmigemo fzf fd-find git python3 python3-pip bat emacs ffmpeg chsh rust zplug tpm pip3
+INSTALL_TARGETS := zsh tmux cmigemo fzf fd-find git python3 python3-pip bat emacs ffmpeg chsh rust zplug tpm pip3 docker avahi-daemon ipython3
 ACTION_TARGETS := directory locale
 ZSHPATH = $(shell which zsh)
 
@@ -70,7 +70,6 @@ ipython3:  ## Install ipython3
 ifeq (,$(shell which ipython3))
 	@sudo apt install -y $@
 endif
-
 
 bat: directory ## Install bat
 ifeq (,$(shell which bat))
