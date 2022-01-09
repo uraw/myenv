@@ -29,7 +29,8 @@ endif
 
 batcat:  ## Setup bat
 	@sudo apt update
-	@sudo apt install -y bat 
+	@sudo apt install -y bat
+	@mkdir -p ~/.local/bin/
 	@ln -fs /usr/bin/batcat ~/.local/bin/bat
 
 docker:  ## Setup docker
