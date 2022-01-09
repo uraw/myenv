@@ -22,7 +22,6 @@ apt-install:  ## Install applications
 zsh:  ## Install zsh and set as default shell
 	@sudo apt update
 	@sudo apt install -y zsh
-	@sudo chsh -s $(ZSHPATH) ${USER}
 ifeq ($(wildcard ~/.zplug/.),)
 	@curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
 endif
