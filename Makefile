@@ -3,7 +3,7 @@ ZSHPATH = $(shell which zsh)
 
 .PHONY: $(shell grep -E '^[a-zA-Z_-]+:' $(MAKEFILE_LIST) | sed 's/:.*//')
 
-all: apt-install zsh batcat docker python apt-file avahi emacs ffmpeg rust tmux directory locale nas
+all: apt-install zsh batcat docker python apt-file avahi emacs ffmpeg rust tmux directory locale nas trans
 
 # https://postd.cc/auto-documented-makefile/
 .DEFAULT_GOAL := help
@@ -114,3 +114,7 @@ nas:  ## Setup NAS
 	@sudo mkdir -p /mnt/nas
 	@sudo echo "nas.local:/Public	/mnt/nas	nfs" | sudo tee -a /etc/fstab > /dev/null
 	@sudo mount -a
+
+trans:
+	@wget git.io/trans -O ~/.local/bin/trans
+	@chmod +x ~/.local/bin/trans
