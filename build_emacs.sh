@@ -13,6 +13,6 @@ wget https://ftp.gnu.org/gnu/emacs/${SRCARCHIVE}
 tar xf ${SRCARCHIVE}
 cd ${DIRECTORY}
 ./configure --prefix=${HOME}/.local --without-mailutils --with-x-toolkit=lucid --without-pop --with-cairo --with-json
-make -j$(nproc)
+make -j
 make install
 rm -rf emacs-${VERSION}*
