@@ -70,6 +70,10 @@ ifeq (,$(shell uname -r | grep WSL))
 endif
 
 emacs:  ## Buid and install emacs 27.1
+################################################################################
+# Other installations
+################################################################################
+
 ifeq (,$(shell which emacs))
 	@./build_emacs.sh 27.1
 endif
@@ -100,6 +104,14 @@ ifeq ($(wildcard ~/.tmux/plugins/tpm/.),)  # https://stackoverflow.com/questions
 	@git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 endif
 
+trans:  ## Install translation shell
+	@wget git.io/trans -O ~/.local/bin/trans
+	@chmod +x ~/.local/bin/trans
+
+################################################################################
+# Environment setup
+################################################################################
+
 directory:  ## Create my normal directories
 	@mkdir -p ~/projects ~/tmp ~/gits ~/.local/bin ~/.config/auth
 
@@ -115,6 +127,3 @@ nas:  ## Setup NAS
 	@sudo echo "nas.local:/Public	/mnt/nas	nfs" | sudo tee -a /etc/fstab > /dev/null
 	@sudo mount -a
 
-trans:
-	@wget git.io/trans -O ~/.local/bin/trans
-	@chmod +x ~/.local/bin/trans
