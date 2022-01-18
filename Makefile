@@ -17,7 +17,7 @@ help:
 
 apt-install:  ## Install applications
 	@sudo apt update
-	@sudo apt install -y git fzf fd-find silversearcher-ag zip unzip
+	@sudo apt install -y git fzf fd-find silversearcher-ag zip unzip porg
 
 zsh:  ## Install zsh and set as default shell
 	@sudo apt update
@@ -69,11 +69,11 @@ ifeq (,$(shell uname -r | grep WSL))
 	@sudo systemctl enable avahi-daemon
 endif
 
-emacs:  ## Buid and install emacs 27.1
 ################################################################################
 # Other installations
 ################################################################################
 
+emacs: apt-install  ## Buid and install emacs 27.1
 ifeq (,$(shell which emacs))
 	@./build_emacs.sh 27.1
 endif
@@ -82,7 +82,7 @@ endif
 	@sudo apt install -y texinfo  # For magit
 
 
-ffmpeg:  ## Build and install ffmpeg 4.4
+ffmpeg: apt-install  ## Build and install ffmpeg 4.4
 ifeq (,$(shell which ffmpeg))
 	@./build_ffmpeg.sh 4.4
 endif

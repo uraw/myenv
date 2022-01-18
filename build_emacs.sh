@@ -12,7 +12,8 @@ sudo apt install -y autoconf automake libc6-dev libx11-dev libxaw7-dev libjpeg-d
 wget https://ftp.gnu.org/gnu/emacs/${SRCARCHIVE}
 tar xf ${SRCARCHIVE}
 cd ${DIRECTORY}
-./configure --prefix=${HOME}/.local --without-mailutils --with-x-toolkit=lucid --without-pop --with-cairo --with-json
+./configure --without-mailutils --with-x-toolkit=lucid --without-pop --with-cairo --with-json
 make -j
-make install
-rm -rf emacs-${VERSION}*
+sudo porg -lD make install
+cd ..
+rm -rf ${DIRECTORY}

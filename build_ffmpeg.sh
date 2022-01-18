@@ -11,7 +11,8 @@ sudo apt install -y make nasm yasm libx264-dev libx265-dev
 wget https://ffmpeg.org/releases/${SRCARCHIVE}
 tar xf ${SRCARCHIVE}
 cd ${DIRNAME}
-./configure --prefix=${HOME}/.local --enable-gpl --enable-libx264 --enable-nonfree
+./configure --enable-gpl --enable-libx264 --enable-nonfree
 make -j
-make install
-rm -rf ffmpeg-${VERSION}*
+sudo porg -lD make install
+cd ..
+rm -rf ${DIRNAME}
