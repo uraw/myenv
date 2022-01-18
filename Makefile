@@ -3,7 +3,7 @@ ZSHPATH = $(shell which zsh)
 
 .PHONY: $(shell grep -E '^[a-zA-Z_-]+:' $(MAKEFILE_LIST) | sed 's/:.*//')
 
-all: apt-install zsh batcat docker python apt-file avahi emacs ffmpeg rust tmux trans dropbox directory locale nas timezone
+all: apt-install zsh batcat docker python apt-file avahi nodejs emacs ffmpeg rust tmux trans dropbox directory locale nas timezone
 
 # https://postd.cc/auto-documented-makefile/
 .DEFAULT_GOAL := help
@@ -68,6 +68,12 @@ ifeq (,$(shell uname -r | grep WSL))
 	@sudo systemctl start avahi-daemon
 	@sudo systemctl enable avahi-daemon
 endif
+
+nodejs:
+	@sudo apt install -y nodejs npm
+	@sudo npm install n -g
+	@sudo n lts
+	@sudo apt purge -y nodejs npm
 
 ################################################################################
 # Other installations
