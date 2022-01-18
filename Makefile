@@ -3,7 +3,7 @@ ZSHPATH = $(shell which zsh)
 
 .PHONY: $(shell grep -E '^[a-zA-Z_-]+:' $(MAKEFILE_LIST) | sed 's/:.*//')
 
-all: apt-install zsh batcat docker python apt-file avahi emacs ffmpeg rust tmux directory locale nas trans dropbox
+all: apt-install zsh batcat docker python apt-file avahi emacs ffmpeg rust tmux trans dropbox directory locale nas
 
 # https://postd.cc/auto-documented-makefile/
 .DEFAULT_GOAL := help
