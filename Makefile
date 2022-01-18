@@ -3,7 +3,7 @@ ZSHPATH = $(shell which zsh)
 
 .PHONY: $(shell grep -E '^[a-zA-Z_-]+:' $(MAKEFILE_LIST) | sed 's/:.*//')
 
-all: apt-install zsh batcat docker python apt-file avahi emacs ffmpeg rust tmux directory locale nas trans
+all: apt-install zsh batcat docker python apt-file avahi emacs ffmpeg rust tmux directory locale nas trans dropbox
 
 # https://postd.cc/auto-documented-makefile/
 .DEFAULT_GOAL := help
@@ -107,6 +107,13 @@ endif
 trans:  ## Install translation shell
 	@wget git.io/trans -O ~/.local/bin/trans
 	@chmod +x ~/.local/bin/trans
+
+dropbox:  ## Build and install dropbox
+ifneq (armv7l,$(shell uname -m))
+ifeq (,$(shell which dropbox))
+	@./build_dropbox.sh
+endif
+endif
 
 ################################################################################
 # Environment setup
