@@ -3,7 +3,7 @@ ZSHPATH = $(shell which zsh)
 
 .PHONY: $(shell grep -E '^[a-zA-Z_-]+:' $(MAKEFILE_LIST) | sed 's/:.*//')
 
-all: apt-install zsh batcat docker python apt-file avahi emacs ffmpeg rust tmux trans dropbox directory locale nas
+all: apt-install zsh batcat docker python apt-file avahi emacs ffmpeg rust tmux trans dropbox directory locale nas timezone
 
 # https://postd.cc/auto-documented-makefile/
 .DEFAULT_GOAL := help
@@ -134,3 +134,5 @@ nas:  ## Setup NAS
 	@sudo echo "nas.local:/Public	/mnt/nas	nfs" | sudo tee -a /etc/fstab > /dev/null
 	@sudo mount -a
 
+timezone:  ## Set timezone Asia/Tokyo
+	@sudo timedatectl set-timezone Asia/Tokyo
