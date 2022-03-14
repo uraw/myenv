@@ -1,7 +1,7 @@
 #!/bin/sh
 # -*- mode: shell-script -*-
 
-VERSION=${1:-4.4}
+VERSION=${1:-5.0}
 SRCARCHIVE=ffmpeg-${VERSION}.tar.xz
 DIRECTORY=ffmpeg-${VERSION}
 
